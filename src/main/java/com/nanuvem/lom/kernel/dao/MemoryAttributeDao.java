@@ -1,6 +1,8 @@
 package com.nanuvem.lom.kernel.dao;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import com.nanuvem.lom.api.Attribute;
 import com.nanuvem.lom.api.Entity;
@@ -20,7 +22,7 @@ public class MemoryAttributeDao implements AttributeDao {
 		attribute.setVersion(0);
 
 		memoryDatabase.addAttribute(attribute);
-		
+
 		return attribute;
 	}
 
@@ -53,5 +55,13 @@ public class MemoryAttributeDao implements AttributeDao {
 
 	public Attribute update(Attribute attribute) {
 		return memoryDatabase.updateAtribute(attribute);
+	}
+
+	public List<Attribute> findAttributesByFullNameEntity(String fullnameEntity) {
+		Entity entity = memoryDatabase.findEntityByFullName(fullnameEntity);
+		if (entity != null && entity.getAttributes() != null) {
+			return entity.getAttributes();
+		}
+		return null;
 	}
 }
