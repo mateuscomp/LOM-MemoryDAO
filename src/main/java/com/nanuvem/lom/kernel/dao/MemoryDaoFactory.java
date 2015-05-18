@@ -1,10 +1,10 @@
 package com.nanuvem.lom.kernel.dao;
 
-import com.nanuvem.lom.api.dao.AttributeDao;
-import com.nanuvem.lom.api.dao.AttributeValueDao;
+import com.nanuvem.lom.api.dao.PropertyTypeDao;
+import com.nanuvem.lom.api.dao.PropertyDao;
 import com.nanuvem.lom.api.dao.DaoFactory;
+import com.nanuvem.lom.api.dao.EntityTypeDao;
 import com.nanuvem.lom.api.dao.EntityDao;
-import com.nanuvem.lom.api.dao.InstanceDao;
 
 public class MemoryDaoFactory implements DaoFactory {
 
@@ -19,28 +19,28 @@ public class MemoryDaoFactory implements DaoFactory {
 		memoryDatabase = new MemoryDatabase();
 	}
 
-	public EntityDao createEntityDao() {
+	public EntityTypeDao createEntityTypeDao() {
 		if (entityDao == null) {
 			this.entityDao = new MemoryEntityDao(memoryDatabase);
 		}
 		return this.entityDao;
 	}
 
-	public AttributeDao createAttributeDao() {
+	public PropertyTypeDao createPropertyTypeDao() {
 		if (attributeDao == null) {
 			this.attributeDao = new MemoryAttributeDao(memoryDatabase);
 		}
 		return this.attributeDao;
 	}
 
-	public InstanceDao createInstanceDao() {
+	public EntityDao createEntityDao() {
 		if (instanceDao == null) {
 			this.instanceDao = new MemoryInstanceDao(memoryDatabase);
 		}
 		return this.instanceDao;
 	}
 
-	public AttributeValueDao createAttributeValueDao() {
+	public PropertyDao createPropertyDao() {
 		if (attributeValueDao == null) {
 			this.attributeValueDao = new MemoryAttributeValueDao(memoryDatabase);
 		}

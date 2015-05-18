@@ -1,14 +1,13 @@
 package com.nanuvem.lom.kernel.dao;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.nanuvem.lom.api.Attribute;
-import com.nanuvem.lom.api.Entity;
-import com.nanuvem.lom.api.dao.AttributeDao;
+import com.nanuvem.lom.api.PropertyType;
+import com.nanuvem.lom.api.EntityType;
+import com.nanuvem.lom.api.dao.PropertyTypeDao;
 
-public class MemoryAttributeDao implements AttributeDao {
+public class MemoryAttributeDao implements PropertyTypeDao {
 
 	private Long id = 1L;
 	private MemoryDatabase memoryDatabase;
@@ -17,7 +16,7 @@ public class MemoryAttributeDao implements AttributeDao {
 		this.memoryDatabase = memoryDatabase;
 	}
 
-	public Attribute create(Attribute attribute) {
+	public PropertyType create(PropertyType attribute) {
 		attribute.setId(id++);
 		attribute.setVersion(0);
 
@@ -26,11 +25,11 @@ public class MemoryAttributeDao implements AttributeDao {
 		return attribute;
 	}
 
-	public Attribute findAttributeById(Long id) {
-		Collection<Entity> entities = memoryDatabase.getEntities();
+	public PropertyType findPropertyTypeById(Long id) {
+		Collection<EntityType> entities = memoryDatabase.getEntities();
 
-		for (Entity entityEach : entities) {
-			for (Attribute attributeEach : entityEach.getAttributes()) {
+		for (EntityType entityEach : entities) {
+			for (PropertyType attributeEach : entityEach.getPropertiesTypes()) {
 				if (attributeEach.getId().equals(id)) {
 					return attributeEach;
 				}
@@ -39,12 +38,12 @@ public class MemoryAttributeDao implements AttributeDao {
 		return null;
 	}
 
-	public Attribute findAttributeByNameAndEntityFullName(String nameAttribute,
+	public PropertyType findPropertyTypeByNameAndEntityTypeFullName(String nameAttribute,
 			String entityFullName) {
 
-		Entity entity = memoryDatabase.findEntityByFullName(entityFullName);
-		if (entity.getAttributes() != null) {
-			for (Attribute attribute : entity.getAttributes()) {
+		EntityType entity = memoryDatabase.findEntityByFullName(entityFullName);
+		if (entity.getPropertiesTypes() != null) {
+			for (PropertyType attribute : entity.getPropertiesTypes()) {
 				if (attribute.getName().equalsIgnoreCase(nameAttribute)) {
 					return attribute;
 				}
@@ -53,14 +52,14 @@ public class MemoryAttributeDao implements AttributeDao {
 		return null;
 	}
 
-	public Attribute update(Attribute attribute) {
+	public PropertyType update(PropertyType attribute) {
 		return memoryDatabase.updateAtribute(attribute);
 	}
 
-	public List<Attribute> findAttributesByFullNameEntity(String fullnameEntity) {
-		Entity entity = memoryDatabase.findEntityByFullName(fullnameEntity);
-		if (entity != null && entity.getAttributes() != null) {
-			return entity.getAttributes();
+	public List<PropertyType> findPropertiesTypesByFullNameEntityType(String fullnameEntity) {
+		EntityType entity = memoryDatabase.findEntityByFullName(fullnameEntity);
+		if (entity != null && entity.getPropertiesTypes() != null) {
+			return entity.getPropertiesTypes();
 		}
 		return null;
 	}
